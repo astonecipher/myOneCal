@@ -1,0 +1,233 @@
+{extends file="db:CAL_DASHBOARD"}
+
+
+{block name="header-css"}
+	<link media="all" rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="https://www.filelogix.com/css/DT_bootstrap.css"/>
+
+{/block}
+
+{block name="header-js"}
+
+
+	<link rel="stylesheet" type="text/css" href="https://www.filelogix.com/css/DT_bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="https://www.filelogix.com/css/TableTools.css">
+ 
+       <script type="text/javascript" src="/js/jquery.js"></script>
+       <script type="text/javascript" src="/js/bootstrap.min.js"/></script>
+
+{literal}
+{/literal}
+ <script type="text/javascript" src="https://www.filelogix.com/js/canvasjs.min.js"></script>
+{/block}
+
+{block name="body"}
+
+          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-xs-6 col-md-3">
+              <img data-src="/assets/dashboard/holder.min.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <img data-src="/assets/dashboard/holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <img data-src="/assets/dashboard/holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+<!--             <div class="col-xs-6 col-sm-3 placeholder"> -->
+<!--               <img data-src="/assets/dashboard/holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail"> -->
+<!--               <h4>Label</h4> -->
+<!--               <span class="text-muted">Something else</span> -->
+<!--             </div> -->
+          </div>
+
+<div class="btn-group">
+  <button class="btn" id="currentCalendar">{$currentCalendar|default:"Calendar"}</button>
+  <button class="btn dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+	{foreach $calendars as $calendar}
+		<li><a href="/onecal/calendar/home/{$calendar.sShortName}">{$calendar.sName}</a></li>
+	{/foreach}	
+  </ul>
+</div>
+<div class="btn-group">
+  <button class="btn active">Events</button>
+  <button class="btn disabled" disabled>Locations</button>
+  <button class="btn disabled" disabled>Categories</button>
+  <button class="btn disabled" disabled>Areas</button>
+</div>
+<div class="container col-md-11" style="padding-bottom: 50px;">
+{include file="db:EVENTS_TABLE"}
+</div>
+
+<div class="container hide">
+<div class="span5">
+<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+</div>
+<div class="col-md-offset-1 span-md-5" >
+<div id="chartContainer2" style="height: 300px;"></div>
+</div>
+</div>
+{/block}
+
+{block name="footer-scripts"}
+{literal}
+
+{/literal}
+
+{literal}
+
+	<script type="text/javascript" src="https://www.filelogix.com/js/lodash.min.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/DT_bootstrap.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/TableTools.min.js"></script>
+
+<script type="text/javascript" src="https://www.filelogix.com/js/datatables.responsive.js"></script>
+
+<script type="text/javascript">
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+   "datetime-us-pre": function ( a ) {
+       var b = a.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4}) (\d{1,2}):(\d{1,2}) (am|pm|AM|PM|Am|Pm)/),
+           month = b[1],
+           day = b[2],
+           year = b[3],
+           hour = b[4],
+           min = b[5],
+           ap = b[6];
+ 
+       if(hour == '12') hour = '0';
+       if(ap == 'pm') hour = parseInt(hour, 10)+12;
+ 
+       if(year.length == 2){
+           if(parseInt(year, 10)<70) year = '20'+year;
+           else year = '19'+year;
+       }
+       if(month.length == 1) month = '0'+month;
+       if(day.length == 1) day = '0'+day;
+       if(hour.length == 1) hour = '0'+hour;
+       if(min.length == 1) min = '0'+min;
+ 
+       var tt = year+month+day+hour+min;
+       return  tt;
+   },
+   "datetime-us-asc": function ( a, b ) {
+       return a - b;
+   },
+ 
+   "datetime-us-desc": function ( a, b ) {
+       return b - a;
+   }
+});
+ 
+jQuery.fn.dataTableExt.aTypes.unshift(
+   function ( sData )
+   {
+       if (sData !== null && sData.match(/\d{1,2}\/\d{1,2}\/\d{2,4} \d{1,2}:\d{1,2} (am|pm|AM|PM|Am|Pm)/))
+       {
+ 
+           return 'datetime-us';
+       }
+       return null;
+   }
+);
+
+{/literal}
+
+$(document).ready(function() {
+	$('#events').dataTable( {
+		"sDom": "T<'row'><'row'<'span3'l><'span11'f>r>t<'row'<'span11 small'i><'span11'p>>",
+		"sPaginationType": "bootstrap",
+		"bStateSave": true,
+		
+		"oTableTools": {
+			"sSwfPath": "/swf/copy_csv_xls_pdf.swf", 			
+			"aButtons": [ "copy", "csv", "xls", "pdf" ]
+		},
+		"oLanguage": {
+			"sLengthMenu": "_MENU_ records per page"
+		},
+		"aoColumns": [
+			{ "bSortable": true },
+			{ "bSortable": true },
+			{ "bSortable": true },
+			{ "bSortable": true },
+			{ "bSortable": true,  "sType": "datetime-us" },
+		]
+
+	} );
+	
+
+
+} );
+
+$('#events').show();
+
+
+</script>
+
+
+ <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer1",
+    {
+
+      title:{
+      text: "Events Coming Up"
+      },
+       data: [
+      {
+        type: "line",
+
+        dataPoints: [
+
+	{foreach $chartLeft as $left} 
+        { x: new Date({$left.year}, {$left.month-1}, {$left.day}), y: {$left.count} },
+ 
+        {/foreach}
+        ]
+      }
+      ]
+    });
+
+    chart.render();
+
+   var chart2 = new CanvasJS.Chart("chartContainer2",
+    {
+
+      title:{
+      text: "Events Viewed"
+      },
+       data: [
+      {
+        type: "area",
+
+        dataPoints: [
+	{$rightSum=0}
+ 	{foreach $chartRight as $right} 
+	{$rightSum=$rightSum+$right.count}
+        { x: new Date({$right.year}, {$right.month}, {$right.day}), y: {$rightSum} },
+ 
+        {/foreach}    
+        ]
+      }
+      ]
+    });
+
+    chart2.render();
+  }
+  </script>
+
+
+
+
+{/block}
+

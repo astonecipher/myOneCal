@@ -1,6 +1,9 @@
 <?php
 
   
+  // FOR http://dev.onecal.co.php53-13.dfw1-1.websitetestlink.com/
+
+
   define("BASE", "onecal");
   define("BASEDIR", "");
   define("FLXDIR", "lib/filelogix/");
@@ -9,13 +12,12 @@
   define("PLUGINSDIR", "plugins/");
   define("CALDIR", "CAL/");
   define("FORMSDIR", "CAL/");
-  define("SMARTY_DIR", "/mnt/stor9-wc1-dfw1/649984/www.onecal.co/lib/Smarty-3.1.13/libs/");
-  define("DB", "649984_OneCal");
-  define("DBHOST", "mysql51-049.wc1.dfw1.stabletransit.com");
-  define("DBUSER", "649984_OneCal");
-  define("DBPASSWD", "0n3CaL15!");
+  define("SMARTY_DIR", "/mnt/stor9-wc1-dfw1/649984/dev.onecal.co/lib/Smarty-3.1.13/libs/");
+  define("DB", "649984_onecal20");
+  define("DBHOST", "mysql51-045.wc1.dfw1.stabletransit.com"); 
+  define("DBUSER", "649984_onecaldb2");
+  define("DBPASSWD", ")7GnZ(CSbFP>mr[J");
   define("HEADER", "header.php");
-  define("FOOTER", "footer.php");
 
   error_reporting(E_ALL);
   

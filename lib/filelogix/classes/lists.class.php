@@ -39,7 +39,7 @@ class lists
   public function retrieveByID($id)
   {
   	$this->listArray = array();
-    
+    error_log("Retrieving by id:$id in lists.class.php\n\n");
     $q = "SELECT `key`, `value` FROM `FLX_LIST` WHERE `listID` = '". $id . "'";
     
     $rows = $this->db->query($q);
@@ -59,7 +59,7 @@ class lists
   	$this->listArray = array();
     
     $q = "SELECT id FROM `FLX_LISTS` WHERE `name` = '". $name . "' limit 1";
-    
+    error_log("Retrieving by name:$name in lists.class.php\n\n");
     $rows = $this->db->query($q);
 
     foreach ($rows as $row) {

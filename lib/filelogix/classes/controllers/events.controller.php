@@ -39,7 +39,7 @@ class events
 	  $this->userID = $this->auth->getUserID();
 	  
 	  $this->lists = new \lists($this->db);
-
+        error_log("Event controller built\n\n");
 	}
 	
 	/**

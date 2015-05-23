@@ -1,23 +1,23 @@
-<?php /* Smarty version Smarty-3.1.13, created on 2015-04-03 07:29:27
+<?php /* Smarty version Smarty-3.1.13, created on 2015-05-21 07:53:30
          compiled from "db:cal_admin" */ ?>
-<?php /*%%SmartyHeaderCode:1300681491551e7997354b51-36115831%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1843824681555dc73a3f7ad5-23831329%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '507226b2ee62ebc584d37162809d90538169ef59' => 
     array (
       0 => 'db:cal_admin',
-      1 => 1401372030,
+      1 => 1432179403,
       2 => 'db',
     ),
-    'ff49eb36fc5b9b42d02790a8e9fc6744dac033c2' => 
+    '96e98dc0a071e9031638794927f1d96551ac1b8e' => 
     array (
-      0 => 'db:cal_wrapper',
-      1 => 1427811977,
+      0 => 'db:cal_dashboard',
+      1 => 1432188669,
       2 => 'db',
     ),
   ),
-  'nocache_hash' => '1300681491551e7997354b51-36115831',
+  'nocache_hash' => '1843824681555dc73a3f7ad5-23831329',
   'function' => 
   array (
   ),
@@ -30,17 +30,19 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'navShareActive' => 0,
     'navFeedsActive' => 0,
     'navSupportActive' => 0,
-    'navAdminEnabled' => 0,
     'navAdminActive' => 0,
+    'navAdminEnabled' => 0,
+    'calendars' => 0,
+    'calendar' => 0,
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_551e7997e76c55_23724855',
+  'unifunc' => 'content_555dc73a5fa9b5_15375655',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_551e7997e76c55_23724855')) {function content_551e7997e76c55_23724855($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_555dc73a5fa9b5_15375655')) {function content_555dc73a5fa9b5_15375655($_smarty_tpl) {?><!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="http://www.onecal.co.php53-13.dfw1-1.websitetestlink.com/">
+    <base href="http://dev.onecal.co.php53-13.dfw1-1.websitetestlink.com/">
     <meta charset="utf-8">
     <title>OneCal Calendar Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,9 +55,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <meta http-equiv="pragma" content="no-cache">
 
     <!-- Le styles -->
-    <link href="https://www.filelogix.com/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://www.filelogix.com/css/bootstrap-responsive.css" rel="stylesheet">
-
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/assets/css/dashboard.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -63,11 +65,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     <![endif]-->
 
     <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/onecal/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/onecal/assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/onecal/assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="/onecal/assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="/onecal/assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="/assets/ico/favicon.png">
 
 
 
@@ -100,37 +102,74 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
   </head>
 
-  <body>
+  <body>   
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="calendar/home">OneCal Portal</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li <?php if ($_smarty_tpl->tpl_vars['navHomeActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/home">Home</a></li>
-             <li <?php if ($_smarty_tpl->tpl_vars['navInboxActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/inbox">Inbox</a></li>
-              <li <?php if ($_smarty_tpl->tpl_vars['navCreateActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/add">Create</a></li>
-              <li <?php if ($_smarty_tpl->tpl_vars['navManageActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/manage">Manage</a></li>
-              <li <?php if ($_smarty_tpl->tpl_vars['navShareActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/share">Share</a></li>
-              <li <?php if ($_smarty_tpl->tpl_vars['navFeedsActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/feeds">Feed</a></li>
-              <li <?php if ($_smarty_tpl->tpl_vars['navSupportActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/support">Support</a></li>
-              <?php if ($_smarty_tpl->tpl_vars['navAdminEnabled']->value){?><li <?php if ($_smarty_tpl->tpl_vars['navAdminActive']->value){?> class="active" <?php }?>><a href="/onecal/calendar/admin">Admin</a></li><?php }?>
-              <li><a href="/onecal/calendar/logout">Logout</a></li>
-            </ul>
-          </div>
+			<a class="navbar-brand" href="calendar/home">OneCal Portal</a>
+        </div>
+<?php if ($_smarty_tpl->tpl_vars['navHomeActive']->value||$_smarty_tpl->tpl_vars['navInboxActive']->value||$_smarty_tpl->tpl_vars['navCreateActive']->value||$_smarty_tpl->tpl_vars['navManageActive']->value||$_smarty_tpl->tpl_vars['navShareActive']->value||$_smarty_tpl->tpl_vars['navFeedsActive']->value||$_smarty_tpl->tpl_vars['navSupportActive']->value||$_smarty_tpl->tpl_vars['navAdminActive']->value){?>      
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
         </div>
       </div>
-     </div>
+<?php }?>
+    </nav>
+          
 
+ <?php if ($_smarty_tpl->tpl_vars['navHomeActive']->value||$_smarty_tpl->tpl_vars['navInboxActive']->value||$_smarty_tpl->tpl_vars['navCreateActive']->value||$_smarty_tpl->tpl_vars['navManageActive']->value||$_smarty_tpl->tpl_vars['navShareActive']->value||$_smarty_tpl->tpl_vars['navFeedsActive']->value||$_smarty_tpl->tpl_vars['navSupportActive']->value||$_smarty_tpl->tpl_vars['navAdminActive']->value){?>      
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+              <li <?php if ($_smarty_tpl->tpl_vars['navHomeActive']->value){?> class="active" <?php }?>><a href="/calendar/home">Home</a></li>
+             <li <?php if ($_smarty_tpl->tpl_vars['navInboxActive']->value){?> class="active" <?php }?>><a href="/calendar/inbox">Inbox</a></li>
+              <li <?php if ($_smarty_tpl->tpl_vars['navCreateActive']->value){?> class="active" <?php }?>><a href="/event/add">Create</a></li>
+              <li <?php if ($_smarty_tpl->tpl_vars['navManageActive']->value){?> class="active" <?php }?>><a href="/calendar/manage">Manage</a></li>
+              <li <?php if ($_smarty_tpl->tpl_vars['navShareActive']->value){?> class="active" <?php }?>><a href="/calendar/share">Share</a></li>
+              <li <?php if ($_smarty_tpl->tpl_vars['navFeedsActive']->value){?> class="active" <?php }?>><a href="/calendar/feeds">Feed</a></li>
+              <li <?php if ($_smarty_tpl->tpl_vars['navSupportActive']->value){?> class="active" <?php }?>><a href="/calendar/support">Support</a></li>
+              <?php if ($_smarty_tpl->tpl_vars['navAdminEnabled']->value){?><li <?php if ($_smarty_tpl->tpl_vars['navAdminActive']->value){?> class="active" <?php }?>><a href="/calendar/admin">Admin</a></li><?php }?>
+              <?php if ($_smarty_tpl->tpl_vars['navHomeActive']->value||$_smarty_tpl->tpl_vars['navInboxActive']->value||$_smarty_tpl->tpl_vars['navCreateActive']->value||$_smarty_tpl->tpl_vars['navManageActive']->value||$_smarty_tpl->tpl_vars['navShareActive']->value||$_smarty_tpl->tpl_vars['navFeedsActive']->value||$_smarty_tpl->tpl_vars['navSupportActive']->value||$_smarty_tpl->tpl_vars['navAdminActive']->value){?> 
+              <li><a href="/calendar/logout">Logout</a></li>
+              <?php }?>
+          </ul>
+          <ul class="nav nav-sidebar">
+	<?php  $_smarty_tpl->tpl_vars['calendar'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['calendar']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['calendars']->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['calendar']->key => $_smarty_tpl->tpl_vars['calendar']->value){
+$_smarty_tpl->tpl_vars['calendar']->_loop = true;
+?>
+		<li><a href="/calendar/home/<?php echo $_smarty_tpl->tpl_vars['calendar']->value['sShortName'];?>
+"><?php echo $_smarty_tpl->tpl_vars['calendar']->value['sName'];?>
+</a></li>
+	<?php } ?>	
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+          </ul>
+        </div>
+       
+        
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<?php }?>           
+	<div class="container" >
 
-
-	<div class="container" style="margin-top: 50px;">
 	
 
 
@@ -149,7 +188,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 	
 				<h4>Users Pending Approval</h4>
 
-					<table class="table table-bordered table-striped hide" id="events">
+					<table class="table table-bordered table-striped" id="events">
 						<thead>
 							<tr>
 								<th>
@@ -235,15 +274,16 @@ $_smarty_tpl->tpl_vars['user']->_loop = true;
 
 
 	</div>
-
+	
+	
     
 
 
 
-	<script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/release-datatables/media/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="/assets/js/datatable/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/DT_bootstrap.js"></script>
-	<script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/dataTables.bootstrap.js"></script>
-	<script type="text/javascript" charset="utf-8" language="javascript" src="https://www.filelogix.com/js/TableTools.min.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="/assets/js/datatable/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" charset="utf-8" language="javascript" src="/assets/js/datatable/dataTables.tableTools.min.js"></script>
 
 
 <script type="text/javascript">
@@ -350,7 +390,4 @@ function showUser(userID) {
 
   </body>
 </html>
-
-
-
 <?php }} ?>
