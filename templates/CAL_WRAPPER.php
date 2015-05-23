@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="http://www.onecal.co.php53-13.dfw1-1.websitetestlink.com/">
+
     <meta charset="utf-8">
     <title>{block name="title"}OneCal Calendar Portal{/block}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

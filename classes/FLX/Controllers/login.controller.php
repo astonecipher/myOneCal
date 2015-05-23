@@ -115,8 +115,8 @@ class login
 				return $returnURL . "?PHPSESSID=" . session_id();
 			}
 			else {
-				error_log("Transferring to /buzz/home/");
-				return "/buzz/home";
+				error_log("Transferring to /home/");
+				return "/home";
 			}
 		}
 		else {

@@ -128,11 +128,13 @@ class home extends \controller
                     return $this->home($params);
                 } else {
                     $this->view = "CAL_LOGIN";
+                    $this->vars['controller'] = 'HOME';
                     $this->vars["alertError"] = true;
                     return true;
                 }
             }
             $this->view = "CAL_LOGIN";
+	    $this->vars["controller"] = 'HOME';
             $this->vars["navHomeActive"] = false;
             
             return true;

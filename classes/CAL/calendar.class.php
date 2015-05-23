@@ -34,7 +34,19 @@ class calendar
 
 		
 	}	
+
+	public function getTopEvents($calendar, $fromDate, $toDate, $limit) {
 	
+	    $limitStr = $this->db->quote($limit);
+	     
+	    $r=$this->db->query("select *,CAL_EVENT.id as eventID, date_format(CAL_EVENT.tStart, '%m/%d/%Y') as dateStr, DATE_FORMAT(tStart,'%b %d %Y %h:%i %p') as tStartStr, DATE_FORMAT(tEnd,'%b %d %Y %h:%i %p') as tEndStr, CAL_EVENT.kCategoryID as categoryID,'All Categories' as category, CAL_EVENT.kLocationID as location, left(CAL_EVENT.sTitle,100) as title, CAL_EVENT.sDescription as description, CAL_EVENT.sURL as website, CAL_EVENT.sContactEmail as emailAddress, date(tStart) as date, '904-555-1212' as phone, CAL_EVENT.tStart as startStr, CAL_EVENT.tEnd as endStr, CAL_LOCATION.sName as locationName, CAL_LOCATION.zAddress as zAddress, CAL_LOCATION.sState as sState, CAL_LOCATION.sCity as sCity, CAL_CATEGORIES.squareImg as squareImg, CAL_CATEGORIES.rectImg as rectImg, CAL_LOCATION.id as locationID, CAL_CATEGORIES.id as categoryID, CAL_CATEGORIES.sName as categoryName from CAL_EVENT left join CAL_EVENTS on (CAL_EVENT.kEventID=CAL_EVENTS.id) left join CAL_LOCATION on (CAL_EVENT.kLocationID=CAL_LOCATION.id) left join CAL_CATEGORIES on (CAL_CATEGORIES.id=CAL_EVENT.kCategoryID) where CAL_EVENT.sStatus='' and CAL_EVENT.sTitle!='' and CAL_EVENT.tStart>=now() order by tStart asc,CAL_EVENT.bRepeating asc limit 3");
+	    $results=$r->fetchAll();
+	
+	    error_log($this->db->lastQuery());
+	
+	    return $results;
+	
+	}
 	public function getCalendarsByUserID($userID) {
 	  
 	  $r=$this->db->query("select * from CAL_USERS left join CAL_MASTER on (CAL_USERS.kCalendarID=CAL_MASTER.id) where bActive is TRUE and CAL_USERS.kUserID=\"$userID\"");

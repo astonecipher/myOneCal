@@ -2,7 +2,7 @@
 
 /**
  * FILELOGIX CALENDAR CLASS
- *  ORIGINAL
+ *  
  * @author Wes Benwick
  * @link http://www.filelogix.com
  * @license Part of Filelogix usage license
@@ -19,7 +19,7 @@ class calendar
 	private $connID;
 	private $sessionID;
 	private $userID;
-	private $view = "CAL_DASHBOARD";
+	private $view = "CAL_LARGE_WRAPPER";
 	private $auth;
 	private $vars = array();
 	private $lists;
@@ -547,7 +547,7 @@ class calendar
 					    error_log("Event Submitted\n\n");
 // 						$eventID = $calendar->createEvent("1", $eventTitle, $eventDescription, $eventDetails, $category, $startDateTimeStr, $endDateTimeStr, $eventLocation, $eventLink, $eventRepeats);  // TESTING
 						$calendarID = $_POST["calendarID"];
-						if ($calendar->checkCalendarByUserID($this->userID, $calendarID)) { // start here
+						if ($calendar->checkCalendarByUserID($this->userID, $calendarID)) {
 						    error_log("CalendarByUser verified.\n");
 							$eventID = $calendar->addEvent($calendarID, $eventParams["sTitle"], $category, $eventRepeats, $eventParams, $repeatParams);
 							$this->vars["successMsg"]="Your new event was successfully added to the calendar. (ID: $eventID)";	
@@ -2701,7 +2701,53 @@ class calendar
 	}
 
 	
+	public function feeds($params) {
 
+	  if ($this->auth->validate($this->userID)) {
+		
+		$this->view="CAL_FEEDS";
+		$this->vars["navFeedsActive"]=true;
+		$this->vars["navFeedsEnabled"]=true;
+
+		$calendar = new \CAL\calendar($this->db);
+
+		if (($params[2] != "") or ($params[2] != "login")) {
+			if (!$this->calendar->setCalendarByUserID($this->userID, $this->calendar->getCalendarByShortName($params[2]))) {
+				$this->calendar->setCalendarByUserID($this->userID, $this->calendar->getDefaultCalendarByUserID($this->userID));
+			}
+		}
+
+		if (($params[3] != "")) {
+			if (!$this->calendar->setFeedByUserID($this->userID, $this->calendar->getCalendarByShortName($params[2]), $params[3])) {
+				$this->calendar->setFeedByUserID($this->userID, $this->calendar->getCalendarByShortName($params[2]), $this->calendar->getCurrentFeedByUserID($this->userID));
+			}
+		}
+
+		$calendarID = $this->calendar->getCurrentCalendarByUserID($this->userID);
+		$feedID = $this->calendar->getCurrentFeedByUserID($this->userID, $calendarID);
+		$this->vars["feeds"] = $this->calendar->getFeedsByCalendarIDAndUserID($_SESSION["userID"], $calendarID);
+		$this->vars["calendars"] = $this->calendar->getCalendarsByUserID($_SESSION["userID"]);
+		$this->vars["currentCalendar"] = $this->calendar->getCurrentCalendarNameByUserID($this->userID);
+		$this->vars["currentFeed"] = $this->calendar->getCurrentFeedNameByUserID($this->userID, $calendarID);
+
+
+		$events = $calendar->getEventsByFeedID($calendarID, $feedID);
+
+		$this->vars["events"]=$events; 
+		
+		return true;
+	  }
+	  
+	  else {
+
+		$this->view="CAL_LOGIN";
+		$this->vars["navHomeActive"]=false;
+		
+		return true;		  
+		  
+	  }
+
+	}
 	
 	public function inbox($params) {
 
@@ -2936,6 +2982,8 @@ class calendar
 		
 		$this->view="CAL_HOME";
 		$this->vars["navHomeActive"]=true;
+		
+		error_log("Logging Calendar Validated User In... " . $_POST["username"]);
 		
 		$this->isAdmin = $this->auth->getAccessByUserID($this->auth->getUserID(), "Administrator");
 
