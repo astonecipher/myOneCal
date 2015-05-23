@@ -19,7 +19,7 @@
                 <a class="close" data-dismiss="alert" href="#"></a>Incorrect Username or Password!
                 </div>
   		{/if}
-			<form method="POST" action="/login/go" accept-charset="UTF-8">
+			<form method="POST" action="/calendar/login/" accept-charset="UTF-8">
 			<input type="text" id="username" class="form-control" name="username" placeholder="Username">
 			<input type="password" id="password" class="form-control" name="password" placeholder="Password">
 			<div class="input-group-addon">
