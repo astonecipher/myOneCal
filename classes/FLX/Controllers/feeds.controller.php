@@ -70,7 +70,7 @@ class feeds
             $this->vars["navAdminEnabled"] = false;
         }
         
-        $this->dflt();
+        $this->dflt( $params );
     }
 
     public function dflt($params)
