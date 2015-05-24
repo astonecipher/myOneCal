@@ -40,6 +40,12 @@ class event
         $this->calendar = new \CAL\calendar($this->db);
         $this->lists = new \lists($this->db);
         error_log("CAL/Event controller built\n\n");
+        $this->add();
+    }
+    
+    
+    public function home($params) {
+        $this->add($params);
     }
     
 	public function add($params) {
@@ -324,7 +330,7 @@ class event
 		
 		else {
 		
-			$this->view="CAL_MANAGE";
+			$this->view="CAL_NEW_EVENT";
 			$this->vars["navCreateActive"]=true;
 //			$this->vars["alertInfo"]=true;
 //			$this->vars["infoMsg"]="The event was not saved, please try again.";

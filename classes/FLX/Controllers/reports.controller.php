@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FILELOGIX HELP CLASS
+ * FILELOGIX REPORTS CLASS
  *  
  * @author Andrew Stonecipher
  * @link http://www.filelogix.com
@@ -12,12 +12,18 @@ namespace FLX\Controllers;
 
 class reports
 {
-    
+    private $db;
+    private $sessionID;
+    private $userID;
+    private $auth;
+    private $vars = array();
     private $view;
     
     public function __construct()
     {
-        $this->vars['body'] = "<div class='well'>Reports View</div>";
+        $this->vars['controller'] = "Reports";
+        $this->vars["navCreateActive"]=true;
+        $this->view = "SAMPLE_VIEW";
     }
     
     public function data()

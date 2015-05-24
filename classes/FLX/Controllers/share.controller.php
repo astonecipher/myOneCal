@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FILELOGIX ANALYTICS CLASS
+ * FILELOGIX SHARE CLASS
  *  
  * @author Andrew Stonecipher
  * @link http://www.filelogix.com
@@ -10,7 +10,7 @@
 
 namespace FLX\Controllers;
 
-class analytics
+class share
 {
     private $db;
     private $sessionID;
@@ -21,7 +21,7 @@ class analytics
     
     public function __construct()
     {
-        $this->vars['controller'] = "Analytics";
+        $this->vars['controller'] = "Share";
         $this->vars["navCreateActive"]=true;
         $this->view = "SAMPLE_VIEW";
     }

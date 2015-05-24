@@ -12,12 +12,18 @@ namespace FLX\Controllers;
 
 class help
 {
-    
-    private $view = "<div class='well'>Help View</div>";
+    private $db;
+    private $sessionID;
+    private $userID;
+    private $auth;
+    private $vars = array();
+    private $view;
     
     public function __construct()
     {
-        $this->view();
+        $this->vars['controller'] = "Help";
+        $this->vars["navCreateActive"]=true;
+        $this->view = "SAMPLE_VIEW";
     }
     
     public function data()
@@ -38,5 +44,4 @@ class help
     {
         return $this->transfer;
     }
-    
 }

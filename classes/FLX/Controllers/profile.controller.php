@@ -12,12 +12,18 @@ namespace FLX\Controllers;
 
 class profile
 {
-    
-    private $view = "<div class='well'>Profile View</div>";
+    private $db;
+    private $sessionID;
+    private $userID;
+    private $auth;
+    private $vars = array();
+    private $view;
     
     public function __construct()
     {
-        $this->view();
+        $this->vars['controller'] = "Profile";
+        $this->vars["navCreateActive"]=true;
+        $this->view = "SAMPLE_VIEW";
     }
     
     public function data()
@@ -38,5 +44,4 @@ class profile
     {
         return $this->transfer;
     }
-    
 }
