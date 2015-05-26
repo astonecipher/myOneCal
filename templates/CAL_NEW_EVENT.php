@@ -1,4 +1,4 @@
-{extends file="db:CAL_WRAPPER"}
+{extends file="db:CAL_DASHBOARD"}
 
 {block name="header-css"}
 	<link media="all" rel="stylesheet" type="text/css" href="/assets/css/bootstrap-datetimepicker.min.css" />
@@ -11,24 +11,22 @@
 {/block}
 
 {block name="body"}
-<form method="post" name="eventAdd" action="calendar/{$formAction|default:"add"}">
-<div class="container">
-  <div class="row">
-	<div class="span12">
+<form method="post" name="eventAdd" action="event/{$formAction|default:"add"}">
+
 		<div class="row">
-			{if $alertSuccess}<div class="span8 alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>{$successMsg}</div>{/if}
-			{if $alertInfo}<div class="span8 alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>{$infoMsg}</div>{/if}
-			{if $alertWarning}<div class="span8 alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>{$warningMsg}</div>{/if}
-			{if $alertError}<div class="span8 alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>{$errorMsg}</div>{/if}
+			{if $alertSuccess}<div class="col-md-8 alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>{$successMsg}</div>{/if}
+			{if $alertInfo}<div class="col-md-8 alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>{$infoMsg}</div>{/if}
+			{if $alertWarning}<div class="col-md-8 alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>{$warningMsg}</div>{/if}
+			{if $alertError}<div class="col-md-8 alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>{$errorMsg}</div>{/if}
 		</div>
 		<div class="row">
-			<div class="span4">
+			<div class="col-md-4">
 				<label>Title</label>
-				<input type="text" class="span4" placeholder="1 Event Title" name="eventTitle" value="{$eventTitle}">
+				<input type="text" class="col-md-4" placeholder="1 Event Title" name="eventTitle" value="{$eventTitle}">
 			</div>		  
-			<div class="span4">
+			<div class="col-md-4">
 			    	<label>Category</label>
-				<select id="category" name="category" class="span4">
+				<select id="category" name="category" class="col-md-4">
 					{foreach $categories as $category}
 						<option value="{$category.id}">{$category.name}</option>
 					{/foreach}
@@ -36,29 +34,29 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span3">
+			<div class="col-md-3">
 	 			<label>Starts?</label>
 				<div id="datetimepicker-from"  class="input-append" style="">
-				    <input class="span2" data-format="yyyy-MM-dd HH:mm PP" type="text" name="startDateTime" value="{$startDateTime}"></input>
+				    <input class="col-md-2" data-format="yyyy-MM-dd HH:mm PP" type="text" name="startDateTime" value="{$startDateTime}"></input>
 				    <span class="add-on ">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
 				      </i>
 				    </span>
 				 </div>
 			</div>
 	
-			<div class="span3">
+			<div class="col-md-3">
  				<label>Ends?</label>
 				<div id="datetimepicker-to" class="input-append">
-				    <input class="span2" data-format="yyyy-MM-dd HH:mm PP" type="text" name="endDateTime" value="{$endDateTime}"></input>
+				    <input class="col-md-2" data-format="yyyy-MM-dd HH:mm PP" type="text" name="endDateTime" value="{$endDateTime}"></input>
 				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				      <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
 				      </i>
 				    </span>
 				 </div>
 			</div>
 
-			<div class="span2">
+			<div class="col-md-2">
 				<label>Repeats?</label>
 				<div id="recurring-switch" class="make-switch" data-on-label="Yes" data-off-label="No" style="margin-bottom: 10px;" data-on="success">
 				    <input type="checkbox" id="repeatCheckbox" onChange="javascript:toggleRecurring(this);" name="eventRepeats" value="yes" {if $eventRepeats}checked{/if}>
@@ -69,9 +67,9 @@
 
 		<div class="row">
 		<br>
-			<div class="well span7 hide" id="recurring">
+			<div class="well col-md-7 hide" id="recurring">
 	
-				<div class="span2">
+				<div class="col-md-2">
 					<label>How Often?</label>
 					<select name="repeatFreq" class="span2" id="repeatFreq">
 						<option value="D">Daily</option>
@@ -80,7 +78,7 @@
 					 </select>
 				</div>
 
-				<div class="span2 hide" id="daily">
+				<div class="col-md-2 hide" id="daily">
 					<label>When</label>
 					<select name="repeatWhen" class="span2" id="repeatWhenDaily">
 						<option value="E">Every Day</option>
@@ -88,7 +86,7 @@
 					 </select>
 				</div>
 
-				<div class="span2 hide" id="weekly">
+				<div class="col-md-2 hide" id="weekly">
 					<label>When</label>
 					<select name="repeatWhen" class="span2" id="repeatWhenWeekly">
 						<option value="E">Every Week</option>
@@ -98,7 +96,7 @@
 					 </select>
 				</div>
 
-				<div class="span2 hide" id="monthly">
+				<div class="col-md-2 hide" id="monthly">
 					<label>When</label>
 					<select name="repeatWhen" class="span2" id="repeatWhenMonthly">
 						<option value="1">1st</option>
@@ -118,12 +116,12 @@
 						<option value="Saturday">Saturday</option>
 					 </select>
 				</div>
-				<div class="span2">
+				<div class="col-md-2">
 					<label>Stop Repeating?</label>
 					<div id="datetimepicker-stop" class="input-append">
-						    <input class="span2" data-format="yyyy/MM/dd" type="text" name="stopRepeating" value="{$stopRepeating}"></input>
+						    <input class="col-md-2" data-format="yyyy/MM/dd" type="text" name="stopRepeating" value="{$stopRepeating}"></input>
 						    <span class="add-on">
-						      		<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						      		<i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
 							        </i>
 						    </span>
 					 </div>
@@ -132,25 +130,25 @@
 		</div>
 
 		<div class="row">
-			<div id="locationBox" class="span4">
+			<div id="locationBox" class="col-md-4">
 				<label>Location</label>
-				<select id="location" name="eventLocation" class="span4">
+				<select id="location" name="eventLocation" class="col-md-4">
 					<option value="new">New Location</option>
 					{foreach $locations as $location} 
 						<option value="{$location.id}">{$location.sName}</option>
 					{/foreach}
 				</select>	
-				<textarea name="newLocation" id="newLocation" class="input-xlarge span4" rows="7" placeholder="Enter New Location Here" {$locationDisabled} {$locationReadOnly}>{$newLocation}</textarea>
+				<textarea name="newLocation" id="newLocation" class="input-xlarge col-md-4" rows="7" placeholder="Enter New Location Here" {$locationDisabled} {$locationReadOnly}>{$newLocation}</textarea>
 				<input type="hidden" name="prevLocation" value="{$newLocation}">
 			</div>
 				
-			<div class="span4">
+			<div class="col-md-4">
 
 				<label>Brief Description</label>
-				<textarea name="eventDescription" id="description" class="input-xxlarge span4" style="resize: none;" rows="7">{$eventDescription}</textarea>
+				<textarea name="eventDescription" id="description" class="input-xxlarge col-md-4" style="resize: none;" rows="7">{$eventDescription}</textarea>
 
 			</div>
-			<div id="ticketed-switch" class="make-switch  span4" data-on-label="Ticketed" data-off-label="Free / No Charge" data-on="success" data-off="primary" >
+			<div id="ticketed-switch" class="make-switch  col-md-4" data-on-label="Ticketed" data-off-label="Free / No Charge" data-on="success" data-off="primary" >
 				    <input type="checkbox" name="eventTicketed"  id="eventTicketed" onChange="javascript:toggleTicketed(this);" value="yes" {if $eventTicketed}checked{/if}>
 			</div>
 		</div>
@@ -158,32 +156,32 @@
 		</div>
 		<div class="row">
 
-		       <div class="well span7 hide" id="ticketed">
-					<div class="span2">
+		       <div class="well col-md-7 hide" id="ticketed">
+					<div class="col-md-2">
 					<label>Cost?</label>
-					 <input type="text" class="money span1" name="eventCost" placeholder="0.00" value="{$eventCost}">
+					 <input type="text" class="money col-md-1" name="eventCost" placeholder="0.00" value="{$eventCost}">
 					</div>
-					<div class=span3">
+					<div class="col-md-3">
 					<label>Ticketing Website:</label>
-					 <input type="text" class="span4" name="ticketURL" placeholder="http://" value="{$ticketURL}">
+					 <input type="text" class="col-md-4" name="ticketURL" placeholder="http://" value="{$ticketURL}">
 					</div>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="span8">
+			<div class="col-md-8">
 				<label>Event Details</label>
-				<textarea name="eventDetails" id="message" class="input-xlarge span8" rows="7" name="eventDetails">{$eventDetails}</textarea>
+				<textarea name="eventDetails" id="message" class="input-xlarge col-md-8" rows="7" name="eventDetails">{$eventDetails}</textarea>
 			</div>
 		</div>
 		<div class="row">
-			<div class="span8">
-				<label>Link to the Event:<label><input type="text" class="input-xlarge span8" name="eventLink" placeholder="http://" value="{$eventLink}">
+			<div class="col-md-8">
+				<label>Link to the Event:<label><input type="text" class="input-xlarge col-md-8" name="eventLink" placeholder="http://" value="{$eventLink}">
 			</div>
 		</div>
 		<div class="row">
 
-			<div class="span8 centered">
+			<div class="col-md-8 centered">
 				<p class="btn-toolbar pull-right">
 					<input type="hidden" name="locationDisabled" value="{$locationDisabled}">
 					<input type="hidden" name="locationReadOnly" value="{$locationReadOnly}">

@@ -1,41 +1,50 @@
 <div id="buzz-submit-alert">
-	{if $alertSuccess}<br><div class="span10 alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>{$successMsg}</div>{/if}
-	{if $alertInfo}<br><div class="span10 alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>{$infoMsg}</div>{/if}
-	{if $alertWarning}<br><div class="span10 alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>{$warningMsg}</div>{/if}
-	{if $alertError}<br><div class="span10 alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>{$errorMsg}</div>{/if}
+	{if $alertSuccess}<br><div class="col-md-10 alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>{$successMsg}</div>{/if}
+	{if $alertInfo}<br><div class="col-md-10 alert alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>{$infoMsg}</div>{/if}
+	{if $alertWarning}<br><div class="col-md-10 alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>{$warningMsg}</div>{/if}
+	{if $alertError}<br><div class="col-md-10 alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>{$errorMsg}</div>{/if}
 </div>
-<div class="span11"  id="buzz-event-loading">
+<div class="col-md-12"  id="buzz-event-loading">
 	<center>
-	<div class="span11"><img src="images/ajax-loader.gif"></div>
-	<div class="span11">Loading Event</div>
+	<div class="col-md-11"><img src="/images/ajax-loader.gif"></div>
+	<div class="col-md-11">Loading Event</div>
 	</center>
 </div>
-<div class="span11 hide"  id="buzz-event-form">
+<div class="col-md-11 hide"  id="buzz-event-form"> <!-- should be hidden while jquery libraries load -->
 
 	<form action="{$formAction}" method="post" enctype="multipart/form-data" class="form-horizontal" onsubmit="return processEvent();">
 	<!-- Event Title -->
 	<div class="event-title">
-				<label for="post_title" class=""><h4>Event Title:<small class="req"> (required)</small></h4></label>
-					<input type="text" class="input-xxlarge" name="eventTitle" value="{$eventTitle}">
-				</div><!--event-title -->
+		<label for="post_title" class=""><h4>Event Title:<small class="req"> (required)</small></h4></label>
+		<input type="text" class="input-xxlarge" name="eventTitle" value="{$eventTitle}">
+	</div>
+	<!--event-title -->
+
 	<!-- Event Description -->
-	<div class="events-description" style="padding-bottom: 20px;>
-				<label for="post_content" class=""><h4>Event Description:<!--<small class="req"> (required)</small>--></h4></label>
-		<textarea name="eventDescription" class="span10" rows=3>{$eventDetails}</textarea>	</div><!-- event-description -->
+	<div class="events-description" style="padding-bottom: 20px;">
+		<label for="post_content" class=""><h4>Event Description:</h4></label>
+		<textarea  name="eventDescription" class=" form-control" rows="3">{$eventDetails}</textarea>	
+	</div>
+	<!-- event-description -->
 
 	<!-- Event Categories -->
-	<div class="well" id="event_categories">
+	
+	<div class="well row" id="event_categories">
+		
 			<h4 class="event-time">Event Categories:</h4>
 
-			<div class="control-group" style="margin-left: 30px;">
+			<div class="control-group">
 					{foreach $categories as $category}
-			        			<div class="span3">
+			        	<div class="col-md-3" style="margin-left: 30px;">		
 			            		<label class="checkbox" for="category-{$category.id}"><input type="checkbox" name="eventCategories[]" value="{$category.id}" id="category-{$category.id}"> {$category.sName} </label>
-					        </div>
+					 </div>       
 					{/foreach}
 				
 			</div>
-	</div><!-- event-categories -->
+		
+	</div>
+	
+	<!-- event-categories -->
 	
 	<!-- Event Featured Image -->
 {*
@@ -45,7 +54,7 @@
 			<div class="control-group">
 				<label class="control-label" for="eventImage">Event Image:</label>
 				<div class="controls">
-					<!--<input id="fileupload" type="file" name="eventFiles[]" data-url="/calendar/media/upload" multiple>-->
+					<input id="fileupload" type="file" name="eventFiles[]" data-url="/buzz/calendar/media/upload" multiple>
 
     <span class="btn btn-success fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
@@ -68,7 +77,7 @@
 *}
 	<!-- Event Date Selection -->
 
-	<div class="well" id="event-datepicker">
+	<div class="well row" id="event-datepicker">
 
 
 			<h4 class="event-time">Event Time &amp; Date</h4>
@@ -80,14 +89,11 @@
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="EventStartDate">From:</label>
-					<div class="controls">
+					<div>
 
-				<div id="EventStartDate" class="input-append">
-				    <input class="span2" data-format="yyyy-MM-dd" type="text" name="startDate" value="{$startDate}"></input>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-				      </i>
-				    </span>
+				<div id="EventStartDate" class="input-group col-md-2">
+				    <input  data-format="yyyy-MM-dd" type="text" name="startDate" value="{$startDate}">
+				    <span class="input-group-addon glyphicon glyphicon-calendar"></span>
 				 </div>
 <div style="display: inline; white-space: nowrap;">
 						<select name="startHour" class="buzz-select-small" id="startHour"><option value="01">01</option>
@@ -125,12 +131,9 @@
 				<label class="control-label" for="EventEndDate">To:</label>
 					<div class="controls">
 
-				<div id="EventEndDate" class="input-append">
-				    <input class="span2" data-format="yyyy-MM-dd" type="text" name="endDate" value="{$endDate}"></input>
-				    <span class="add-on">
-				      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-				      </i>
-				    </span>
+				<div id="EventEndDate" class="input-group col-md-2">
+				    <input class="form-control" data-format="yyyy-MM-dd" type="text" name="endDate" value="{$endDate}">
+				    <span class="input-group-addon glyphicon glyphicon-calendar"></span>
 				 </div>
 
 <div style="display: inline; white-space: nowrap;">
@@ -170,9 +173,9 @@
 
 			<div class="control-group">
 				<label class="control-label" for="EventFrequency">Repeats?</label>
-					<div class="controls">
-						<div class="span6 pull-left" style="margin-left: 0px;">
-									<div class="span3 pull-left" style="margin-left: 0px; margin-bottom: 10px;">
+					<div class="form-group">
+						<div class="col-md-6 pull-left" style="margin-left: 0px;">
+									<div class="col-md-3 pull-left" style="margin-left: 0px; margin-bottom: 10px;">
 									<select name="repeatFrequency" id="eventFrequency" class="input-medium" onchange="javascript:changeFreq();">
 										<option value="">Never</option>
 										<!--<option value="Hourly">Hourly</option>-->
@@ -183,11 +186,11 @@
 										<option value="Custom">Custom</option>
 									</select>
 									</div>
-									<div class="span4 pull-left" style="margin-left: 5px;">
+									<div class="col-md-4 pull-left" style="margin-left: 5px;">
 										<div id="eventRepeats-RepeatFreq" style="display: none;">
 											  every&nbsp;&nbsp;<div class="input-prepend input-append">
 										         <button class="btn" type="button" onclick="javascript:minusButton('repeatEvery',1);">-</button>
-											 <input class="span2" class="input input-mini" size=2 id="repeatEvery" name="repeatEvery" type="text" style="text-align: center; width: 30px;" value="1">
+											 <input class="col-md-2" class="input input-mini" size=2 id="repeatEvery" name="repeatEvery" type="text" style="text-align: center; width: 30px;" value="1">
 										         <button class="btn" type="button" onclick="javascript:plusButton('repeatEvery',99);">+</button>											</div>&nbsp;&nbsp;<div id="repeatStr" style="display: inline;">day(s)</div>
 										</div>
 									</div>
@@ -227,7 +230,7 @@
 												<option value="4">4</option>
 												<option value="5">5</option>
 												<option value="6">6</option>
-												<option value="7">7</option>
+												option value="7">7</option>
 												<option value="8">8</option>
 												<option value="9">9</option>
 												<option value="10">10</option>
@@ -237,7 +240,8 @@
 												<option value="14">14</option>
 												<option value="15">15</option>
 												<option value="16">16</option>
-												<option value="17">17</option>
+												
+<option value="17">17</option>
 												<option value="18">18</option>
 												<option value="19">19</option>
 												<option value="20">20</option>
@@ -370,7 +374,7 @@
 									<label class="control-label" for="eventDays">When?</label>
 									<div class="controls">
 
-										<textarea name="repeatCustomDates" rows="2" class="span8" placeholder="Enter a list of dates in YYYY-MM-DD format, separated by spaces or commas.  Dates may also be listed in ranges, using '-' or 'to'.">{$repeatCustomDates}</textarea>
+										<textarea name="repeatCustomDates" rows="2" class="col-md-8" placeholder="Enter a list of dates in YYYY-MM-DD format, separated by spaces or commas.  Dates may also be listed in ranges, using '-' or 'to'.">{$repeatCustomDates}</textarea>
 										
 									</div>
 								</div>
@@ -381,7 +385,7 @@
 									<label class="control-label" for="repeatSkip">Except?</label>
 									<div class="controls">
 
-										<textarea name="repeatSkipDates" rows="2" class="span8" placeholder="Enter a list of dates to skip in YYYY-MM-DD format, separated by spaces or commas.">{$repeatSkipDates}</textarea>
+										<textarea name="repeatSkipDates" rows="2" class="col-md-8" placeholder="Enter a list of dates to skip in YYYY-MM-DD format, separated by spaces or commas.">{$repeatSkipDates}</textarea>
 										
 									</div>
 								</div>
@@ -392,11 +396,8 @@
 						<div class="controls">
 
 						<div id="repeatEndDate" class="input-append">
-				   			 <input class="span2" data-format="yyyy-MM-dd" type="text" name="repeatEndDate" value="{$repeatEndDate}"></input>
-				     	          	<span class="add-on">
-				      	      			<i data-time-icon="icon-time" data-date-icon="icon-calendar">
-					      			</i>
-					        		 </span>
+				   			 <input class="col-md-2" data-format="yyyy-MM-dd" type="text" name="repeatEndDate" value="{$repeatEndDate}"></input>
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 						 </div><small> (Leave blank for never ending events)</small>
 					</div>
 				</div>
@@ -409,7 +410,7 @@
 
 			<h4>Event Location Details</h4>
 <div class="row">
-	<div class="span5">
+	<div class="col-md-5">
 			<div class="control-group">
 				<label class="control-label" for="eventLocation">Location?</label>
 					<div class="controls">
@@ -517,7 +518,7 @@
 		</div>		
 	
 	</div>
-	<div class="span4 pull-right" style="height: 400px; border: 1px solid #ccc;">
+	<div class="col-md-4 pull-right" style="height: 400px; border: 1px solid #ccc;">
 		<input type="hidden" id="newLocationLatitude" class="newLocation" name="newLatitutde"  value="{$newLatitude}">
 		<input type="hidden" id="newLocationLongitude" class="newLocation" name="newLongitude" value="{$newLongitude}">
 		<div id="map-canvas" style="height: 400px; max-width: none; width: 100%;">
@@ -527,7 +528,7 @@
 </div>
 	
 <!-- Organizer -->
-<div class="well" id="event_organizer">
+<div class="well row" id="event_organizer">
 
 	<h4>Event Organizer Details</h4>
 				<div class="control-group">	
@@ -571,7 +572,7 @@
 	
 <!-- Event Website -->
 
-<div class="well" id="event_url">
+<div class="well row" id="event_url">
 
 	<h4>Event Website</h4>
 
@@ -598,7 +599,7 @@
 
 	
 <!-- Custom -->
-<div class="well" id="event-custom">
+<div class="well row" id="event-custom">
 	<h4>Sharing</h4>
 	<div class="margin-left: 30px;" style="padding-bottom: 30px; position: relative; left: 30px; white-space: wrap; overflow: hidden; margin-right: 20px;">
 		<label class="checkbox">
@@ -615,7 +616,7 @@
 	
 <!-- Event Cost -->
 
-<div class="well" id="event_cost">
+<div class="well row" id="event_cost">
 
 	<h4>Event Cost</h4>
 		
@@ -637,16 +638,16 @@
 
 	{if $calendars|@count >= 1}
 
-	<div class="well" id="event_calendar">
+	<div class="row well" id="event_calendar">
 			<h4 class="event-time">Add to Calendar:</h4>
 
 			<div class="control-group" style="margin-left: 30px;">
 					{foreach $calendars as $calendar}
-			        			<div class="span10">
+			        			<div class="col-md-10">
 			            		<label class="radio" for="calendar-{$calendar.id}"><input type="radio" name="calendarID" value="{$calendar.id}" id="calendar-{$calendar.id}" {if $calendar.isSelected}checked{/if}> {$calendar.sName} </label>
 					        </div>
 					{foreachelse}
-			        			<div class="span10">
+			        			<div class="col-md-10">
 			            		<label class="radio" for="calendar-{$calendar.id}"><input type="radio" name="calendarID" value="" id="calendar-{$calendar.id}" checked> Default Calendar</label>
 					        </div>
 					{/foreach}
@@ -658,7 +659,7 @@
 
 	{if $calendars|@count < 1}
 
-	<div class="well" id="event_calendar_default">
+	<div class="well row" id="event_calendar_default">
 			<center><h5 class="event-time">This event will be added to the default calendar.</h5></center>
 
 					<input type="hidden" name="calendarID" value="{$calendarID|default:"0"}">
@@ -667,7 +668,7 @@
 	
 	{/if}
 
-	<div class="well">
+	<div class="well row">
 	<table class="" cellspacing="0" cellpadding="0">
 		<tbody><tr>
 			<td colspan="2" class="tribe_sectionheader">
@@ -706,6 +707,9 @@
 </form>
 
 
+<script src="/lib/fileUploader/js/vendor/jquery.ui.widget.js"></script>
+<script src="/lib/fileUploader/js/jquery.iframe-transport.js"></script>
+<script src="/lib/fileUploader/js/jquery.fileupload.js"></script>
 
 <script type="text/javascript">
 
@@ -713,7 +717,8 @@
 
 
 
-$(function () {
+/*
+  $(function () {
     'use strict';
     var url = 'https://onecal.co/calendar/uploader/index.php';
     $('#fileupload').fileupload({
@@ -746,6 +751,7 @@ $(function () {
   $("#buzz-event-form").show();
 
 });
+*/
 
 function canGeocode() {
 	var newAddress = $("#newAddress").val();
@@ -1264,7 +1270,7 @@ function populateForm() {
 		setMonthDays({$repeatMonthDaysBinary});
 	{/if}
 
-	console.log("Monthly: {$repeatMonth}");
+	//console.log("Monthly: {$repeatMonth}");
 
 	{if $repeatMonth}
 		$("#repeatMonth-{$repeatMonth}").prop("checked",true);
@@ -1285,9 +1291,10 @@ populateForm();
 
 <script type="text/javascript">
 
-	 var map;  
+	  
 	$( document ).ready(function() {
 	
+		var map; 
     		     function initialize() {
         			var mapOptions = {
  		         center: new google.maps.LatLng(30.3369, -81.6614),
@@ -1303,9 +1310,13 @@ populateForm();
 		            mapOptions);
 		      }
 		      google.maps.event.addDomListener(window, 'load', initialize);
+
+
 	});
 
  			function codeAddress(address) {
+				var map;
+
 			      geocoder = new google.maps.Geocoder();
 
 			    geocoder.geocode( { 'address': address}, function(results, status) {

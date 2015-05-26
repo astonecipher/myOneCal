@@ -22,7 +22,9 @@ class admin
 	private $vars = array();
 	private $lists;
 	private $registration;
-
+	private $transfer = false;
+	private $calendar;
+	private $isAdmin;
 	/**
   	 * Create instance, load current info based on session info
   	 *
@@ -32,21 +34,34 @@ class admin
 	public function __construct($db, $sessionID, $userID) {
 	  $this->db = $db;
 	  $this->sessionID = $sessionID;
-	  $this->userID = $userID;
-	  $this->registration = new \registration($this->db);
-	  
-	  $this->auth = new \auth($this->db);
-	  
-	  if (!$this->auth->validate($this->userID)) {
-		  
-		  $this->view = "login";
-		  
-		  return;
-	  }
-	  
+	  $this->auth = new \auth($db);
+	  $this->userID = $this->auth->getUserID();
+
 	  $this->lists = new \lists($this->db);
-	  
-	  $this->dflt();
+	  	
+	  $this->calendar = new \CAL\calendar($this->db);	 
+	  	 
+  	  $this->vars["categories"]=$this->calendar->getAllCategories();
+  	  $this->vars["areas"]=$this->calendar->getAllAreas(1);
+
+	  $this->vars["events"] = $this->calendar->getTopEvents(1, "2014-04-01", "2014-07-01", 3);
+
+	  if ($this->auth->validate($this->userID)) {
+
+		  $this->isAdmin = $this->auth->getAccessByUserID($this->userID, "Administrator");
+		  
+		  error_log("IsAdmin: " . $this->isAdmin);
+		  
+		  if ($this->isAdmin[0]["view"]) {
+		 	 $this->vars["navAdminEnabled"]=true;
+		  }
+
+	  }
+	  else {
+		  	$this->vars["navAdminEnabled"]=false;		  
+	  }
+
+	 // $this->dflt($params);
 	  		
 //	  $this->db->insert("FLX_CONNECTIONS", array("type"=>$this->type, "sessionID"=>$this->sessionID, "httpHost"=>$this->httpHost, "ipAddress"=>$this->ipAddress, "userAgent"=>$this->userAgent, "fingerprint"=>$this->fingerprint, "requestURI"=>$this->requestURI, "_server"=>print_r($_SERVER,1), "_get"=>print_r($_GET,1), "_post"=>print_r($_POST,1)));	
 
@@ -131,28 +146,32 @@ class admin
 
 	}
 
-	public function dflt() {
+	public function admin($params) {
+
 	  if ($this->auth->validate($this->userID)) {
-
-		$players = $this->registration->getRecentPlayers();
-		$playerCount = $this->registration->getPlayerCount();
-		$familyCount = $this->registration->getFamilyCount();
-		$sportCount = $this->registration->getSportCount();
-
-		$this->vars["players"] = $players;
-		$this->vars["playerCount"] = $playerCount;
-		$this->vars["familyCount"] = $familyCount;
-		$this->vars["sportCount"] = $sportCount;
-	
-		$this->vars["active"] = "dashboard";
-		
-		$this->view = "admin";
-		
-		return true;		
+		if ($this->isAdmin[0]["view"]) {
+			$this->view="CAL_ADMIN";
+			$this->vars["navAdminActive"]=true;
+			$users = new \users($this->db);
+			$this->vars["pendingUsers"] = $users->getUsersWithStatus("pending");
+		}
+		else {
+			$this->view="CAL_ERROR";
+			$this->vars["errorMsg"] = "You do not have permission to view this page.";
+			$this->vars["navAdminActive"]=false;
+		}
+		return true;
 	  }
+	  
 	  else {
-		 return false;
+
+		$this->view="CAL_LOGIN";
+		$this->vars["navHomeActive"]=false;
+		
+		return true;		  
+		  
 	  }
+
 	}
 	
 	public function players() {

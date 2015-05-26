@@ -40,12 +40,46 @@ class event
         $this->calendar = new \CAL\calendar($this->db);
         $this->lists = new \lists($this->db);
         error_log("CAL/Event controller built\n\n");
-        $this->add($params);
+        
+      //  $this->dflt($params);
     }
     
     
     public function home($params) {
         $this->add($params);
+    }
+    
+    public function dflt($params) {
+    
+        if ($this->auth->validate($this->userID)) {
+    
+            if ($_POST["submit"] == "Create") {
+    
+                return $this->add($params);
+    
+            }
+    
+            else {
+    
+                $this->view="CAL_NEW_EVENT_V2";
+                $this->vars["navCreateActive"]=true;
+                $this->vars["alertWarning"]=true;
+                $this->vars["warningMsg"]="The event was not saved, please try again.";
+                	
+            }
+    
+            return true;
+        }
+         
+        else {
+    
+            $this->view="CAL_LOGIN";
+            $this->vars["navHomeActive"]=false;
+    
+            return true;
+    
+        }
+    
     }
     
 	public function add($params) {
