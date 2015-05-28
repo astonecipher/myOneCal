@@ -51,7 +51,7 @@
   </button>
   <ul class="dropdown-menu">
 	{foreach $calendars as $calendar}
-		<li><a href="/onecal/calendar/home/{$calendar.sShortName}">{$calendar.sName}</a></li>
+		<li><a href="/calendar/home/{$calendar.sShortName}">{$calendar.sName}</a></li>
 	{/foreach}	
   </ul>
 </div>
@@ -66,10 +66,10 @@
 </div>
 
 <div class="container hide">
-<div class="span5">
+<div class="col-md-5">
 <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
 </div>
-<div class="col-md-offset-1 span-md-5" >
+<div class="col-md-offset-1 col-md-5" >
 <div id="chartContainer2" style="height: 300px;"></div>
 </div>
 </div>
